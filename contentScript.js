@@ -1,7 +1,5 @@
-// contentScript.js
 const twitterFaviconUrl = browser.extension.getURL("favicon.ico");
 
-// Function to replace the SVG with the Twitter logo SVG
 const replaceSVGWithLogo = () => {
   const svgXSelector = 'svg[viewBox="0 0 24 24"][aria-hidden="true"]';
   const svgXElement = document.querySelector(svgXSelector);
@@ -11,14 +9,12 @@ const replaceSVGWithLogo = () => {
   }
 };
 
-// Function to check if the title contains 'X' and change it to 'Twitter'
 const replaceTitleWithTwitter = () => {
   if (document.title.includes("X")) {
     document.title = document.title.replace("X", "Twitter");
   }
 };
 
-// Function to change the favicon to the Twitter favicon
 const replaceFaviconWithTwitter = () => {
   const favicon = document.querySelector("link[rel='icon']") || document.createElement("link");
   favicon.type = "image/x-icon";
@@ -27,7 +23,6 @@ const replaceFaviconWithTwitter = () => {
   document.head.appendChild(favicon);
 };
 
-// Function to handle URL changes and reapply the modifications
 const handleURLChange = () => {
   setTimeout(() => {
     replaceSVGWithLogo();
@@ -36,7 +31,6 @@ const handleURLChange = () => {
   }, 1000); // Adjust the delay (in milliseconds) if needed
 };
 
-// Call the initial modification when the DOM is ready
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", () => {
     replaceSVGWithLogo();
@@ -49,7 +43,6 @@ if (document.readyState === "loading") {
   replaceFaviconWithTwitter();
 }
 
-// Listen for URL changes and reapply modifications when necessary
 const observer = new MutationObserver(handleURLChange);
 const observerConfig = { childList: true, subtree: true };
 observer.observe(document.body, observerConfig);
